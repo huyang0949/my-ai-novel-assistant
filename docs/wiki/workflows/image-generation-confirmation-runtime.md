@@ -10,7 +10,7 @@
 
 用户手动触发的单次图片生成统一采用 `prepare -> ImageGenerationConfirmDialog -> generate(overrides)` 流程。后端入口必须先构建一份生成上下文，`prepare` 返回这份上下文的可展示快照，`generate` 使用同一类上下文并把弹窗中的一次性覆盖参数传给统一图片运行时。
 
-图片生成服务应优先通过 `server/src/services/image/runtime/` 的 `runImageGeneration` 执行，不再在业务服务里散写 provider 校验、模型解析、生成中状态、图片下载落盘、扩展名清理、成功/失败状态和历史归档。
+图片生成服务应优先通过统一图片生成服务执行，不再在业务服务里散写 provider 校验、模型解析、生成中状态、图片下载落盘、扩展名清理、成功/失败状态和历史归档。
 
 ## Current Rule
 
@@ -22,7 +22,7 @@
 - Prompt 优化只回填本次确认弹窗里的正向 prompt 草稿。用户仍需点击确认生成才会发起图片任务，优化结果不自动写回角色、场景、镜头、项目配置或其他长期状态。
 - Prompt 优化入口应允许用户输入自然语言优化要求，例如希望强化的画风、氛围、镜头或保留项；后端 PromptAsset 应优先遵循这些要求，但不得覆盖角色身份、参考图用途、性别锁、无文字/无水印等关键约束。
 - 后端服务应把 prompt、参考图路径、参考图展示元数据、尺寸、负面提示词和 adapter 组装在同一个 generation context 中，避免 `prepare` 和 `generate` 两套逻辑漂移。
-- `runImageGeneration` 是业务表 JSON 状态机图片生成的默认执行入口。业务服务只负责提供 `ImageTargetAdapter`、prompt、参考图和额外 done 状态。
+- 图片生成服务是业务表 JSON 状态机图片生成的默认执行入口。业务服务只负责提供 prompt、参考图和额外 done 状态。
 - 使用 `ImageGenerationTask` 两表模型的入口应保持 `ImageGenerationService` 作为任务创建、查询、资产管理和队列调度 facade；真实执行、取消检查、provider 调用、资产落库、任务重试和 pending 快照图片回填由 `ImageGenerationTaskExecutor` 承担，避免任务执行细节重新堆回 facade。
 - 成功生成后，如果实际使用了可追溯参考素材，应把 `referenceImages` 写入业务状态字段，供前端展示“本次生图使用的参考素材”。
 - 两表模型的参考素材应保存为同 owner 的 `ImageAsset` id；任务执行时解析为本地文件路径或可用 URL 发送给 provider，并在生成资产 metadata 中记录实际使用的 reference asset ids。
@@ -32,8 +32,6 @@
 
 ## Examples
 
-- 漫画角色三视图、表情稿、角色资产、场景设定图和单格图，均应有对应的 `prepare*` API，前端通过 `useImageGenerationFlow` 打开统一弹窗。
-- 短剧角色设计稿和镜头首帧图也属于图片生成入口，必须展示即将发送的图片参数；镜头首帧如启用角色参考图，应在弹窗中列出这些角色设计稿。
 - 小说封面等使用任务表模型的图片生成入口，如果后续迁入统一业务表状态机，应同步补上 prepare 快照；在迁移前也不得新增绕过确认的手动生图入口。
 - 用户看不懂当前 prompt 时，可以在确认弹窗中触发解释；用户希望降低跑偏概率时，可以触发优化。两者都属于生图前辅助决策，不替代最终确认。
 - 用户对优化方向有自己的判断时，应把自然语言要求传给优化动作，而不是让前端拼接固定片段；LLM 负责把用户要求融入可执行 prompt。
@@ -57,12 +55,5 @@
 
 - `client/src/components/image/ImageGenerationConfirmDialog.tsx`
 - `client/src/components/image/useImageGenerationFlow.ts`
-- `server/src/services/image/runtime/`
 - `server/src/services/image/ImageGenerationService.ts`
 - `server/src/services/image/ImageGenerationTaskExecutor.ts`
-- `server/src/services/comic/ComicCharacterImageService.ts`
-- `server/src/services/comic/ComicCharacterAssetService.ts`
-- `server/src/services/comic/ComicPanelImageService.ts`
-- `server/src/services/comic/ComicSceneService.ts`
-- `server/src/services/drama/DramaCharacterImageService.ts`
-- `server/src/services/drama/visual/DramaShotKeyframeService.ts`

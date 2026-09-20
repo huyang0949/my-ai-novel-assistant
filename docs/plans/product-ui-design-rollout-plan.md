@@ -65,8 +65,6 @@
 - `/novels/:id/preview`
 - `/novels/:id/edit`
 - `/novels/:id/chapters/:chapterId`
-- `/drama`
-- `/drama/projects/:id`
 - `/settings`
 - `/worlds`
 - `/style-engine`
@@ -74,8 +72,6 @@
 ### 尚未完成页面级优化
 
 - `/help`
-- `/comic`
-- `/comic/projects/:id`
 - `/chat-legacy`
 - `/story-modes`
 - `/anti-ai-rules`
@@ -157,23 +153,7 @@
 - 写法与防 AI 规则统一为资产库 + 编辑工作区，清理硬编码 slate 色和超大弹窗。
 - 模型路由按“开书、规划、正文、审核、资料处理”组织可用性和修复动作。
 
-## 第四批：短剧与漫画衍生生产
-
-范围：
-
-- `/drama`
-- `/drama/projects/:id`
-- `/comic`
-- `/comic/projects/:id`
-
-实施重点：
-
-- 项目库突出最近项目和下一生产动作。
-- 项目页统一来源、阶段、主任务、质量状态和下一步。
-- 漫画页清理统计小卡、技术标签和硬编码颜色，避免把生成参数放在首屏中心。
-- 不改变现有短剧、漫画生成和图片确认流程。
-
-## 第五批：阅读、帮助与兼容页收尾
+## 第四批：阅读、帮助与兼容页收尾
 
 范围：
 

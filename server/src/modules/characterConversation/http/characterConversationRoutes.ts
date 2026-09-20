@@ -6,9 +6,9 @@ import { validate } from "../../../middleware/validate";
 import { characterConversationService } from "../../../services/characterConversation/CharacterConversationService";
 
 const subjectSchema = z.object({
-  kind: z.enum(["novel_character", "base_character", "book_analysis_character", "drama_character"]),
+  kind: z.enum(["novel_character", "base_character", "book_analysis_character"]),
   id: z.string().trim().min(1),
-  scopeKind: z.enum(["novel", "base_library", "book_analysis", "drama_project"]),
+  scopeKind: z.enum(["novel", "base_library", "book_analysis"]),
   scopeId: z.string().trim().min(1).nullable().optional(),
   chapterAnchor: z.coerce.number().int().positive().optional(),
 });

@@ -252,25 +252,6 @@ export const docsManifest: SiteDocCategory[] = [
     ],
   },
   {
-    id: "derived-workshops",
-    title: "衍生工坊",
-    description: "把小说内容延展为短剧或漫画生产素材。",
-    docs: [
-      doc(
-        "module-short-drama-workspace",
-        "短剧工作台",
-        "了解小说内容向短剧方向延展的入口。",
-        "docs/public/modules/short-drama-workspace.md",
-      ),
-      doc(
-        "module-comic-workspace",
-        "漫画工作台",
-        "围绕小说内容准备漫画分镜和视觉资产。",
-        "docs/public/modules/comic-workspace.md",
-      ),
-    ],
-  },
-  {
     id: "system",
     title: "系统配置",
     description: "管理模型供应商、任务路由、提示词和运行偏好。",

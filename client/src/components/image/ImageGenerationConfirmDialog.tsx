@@ -1,7 +1,7 @@
 /**
  * 生图前统一确认弹窗
  *
- * 用于所有生图入口（角色三视图/表情稿/资产/场景设定图/格子图/Drama 角色/Drama 关键帧）
+ * 用于小说角色、封面和拆书形象等生图入口。
  * 在真正消耗 token 前展示：即将发送的 prompt + 参考图素材 + 模型/尺寸；
  * 用户可临时修改 prompt / provider / size，确认后才发起生图。
  */
@@ -12,14 +12,14 @@ import { Image as ImageIcon, Info, Loader2, Sparkles, Wand2, X } from "lucide-re
 import { Dialog, AppDialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { getAPIKeySettings } from "@/api/settings";
-import type { ImageGenerationOverrides, ImageGenerationPreview } from "@/api/comic";
+import type { ImageGenerationOverrides, ImageGenerationPreview } from "@/api/imageGeneration";
 import { assistImageGenerationPrompt, resolveImageAssetUrl, type ImagePromptAssistResult } from "@/api/images";
 import { toast } from "@/components/ui/toast";
 import SelectControl from "@/components/common/SelectControl";
 
 const SIZE_OPTIONS = [
   { value: "1024x1024", label: "1024×1024（方形 1:1）" },
-  { value: "1024x1536", label: "1024×1536（竖版 2:3，漫画/角色）" },
+  { value: "1024x1536", label: "1024×1536（竖版 2:3，角色）" },
   { value: "1536x1024", label: "1536×1024（横版 3:2，三视图/表情稿）" },
 ];
 

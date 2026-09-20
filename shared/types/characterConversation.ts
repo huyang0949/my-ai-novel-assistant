@@ -4,7 +4,6 @@ export const characterSubjectKindSchema = z.enum([
   "novel_character",
   "base_character",
   "book_analysis_character",
-  "drama_character",
 ]);
 
 export const characterConversationPolicySchema = z.enum([
@@ -17,7 +16,6 @@ export const characterConversationScopeKindSchema = z.enum([
   "novel",
   "base_library",
   "book_analysis",
-  "drama_project",
 ]);
 
 export const characterConversationStatusSchema = z.enum(["active", "archived"]);
