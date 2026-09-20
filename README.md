@@ -584,13 +584,82 @@ pnpm --filter @ai-novel/server test:book-analysis
 ### Monorepo 结构
 
 ```text
-client/   React + Vite 前端
-server/   Express + Prisma + Agent Runtime + Creative Hub
-shared/   前后端共享类型与协议
-images/   README 与产品预览截图
-scripts/  启动和辅助脚本
-docs/     设计文档、阶段检查点、模块计划与历史归档
+client/       React + Vite 前端
+server/       Express + Prisma + Agent Runtime + Creative Hub
+shared/       前后端共享类型、协议与工具
+desktop/      Electron 桌面端壳层
+site/         公开介绍站与文档展示站
+scripts/      启动、构建、检查和发布辅助脚本
+docs/         架构、设计、工作流、Wiki、计划与发布说明
+infra/        部署和基础设施配置
+images/       README、产品预览和文档截图
+.github/      GitHub Actions 与仓库自动化
 ```
+
+#### 前端目录
+
+`client/` 是浏览器端工作台：
+
+- `client/src/pages/`：完整页面，例如小说、创作中心、任务中心和设置页
+- `client/src/components/`：可复用界面组件和业务工作台组件
+- `client/src/api/`：后端 API 请求封装
+- `client/src/hooks/`：React Hooks
+- `client/src/router/`：路由配置
+- `client/src/store/`：前端状态管理
+- `client/src/lib/`：运行时常量、API 地址和基础工具
+- `client/vite.config.ts`：Vite 开发服务器和 `/api` 代理配置
+
+#### 服务端目录
+
+`server/` 是后端 API、小说生产链和运行时：
+
+- `server/src/app.ts`：Express 服务入口和路由挂载
+- `server/src/routes/`：HTTP API 路由
+- `server/src/modules/`：逐步收拢中的业务模块，包括 `setup`、`planning`、`production`、`director`、`characters`、`state` 和 `export`
+- `server/src/services/`：已有业务服务，小说生产和自动导演能力主要位于 `services/novel/`
+- `server/src/platform/`：LLM、日志、运行时和外部依赖等基础设施
+- `server/src/db/`：Prisma、SQLite / PostgreSQL 数据访问
+- `server/src/prisma/`：Prisma Schema 和迁移文件
+- `server/src/prompting/`：Prompt Registry、结构化输出和产品级 AI Prompt
+- `server/src/graphs/`：部分 LangGraph 工作流
+- `server/src/workers/`：后台任务和自动导演 worker
+- `server/src/middleware/`：认证、错误处理等 Express 中间件
+
+#### 共享包与桌面端
+
+- `shared/`：前后端共同使用的 API 类型、领域类型、图片 Prompt 类型和工具函数。修改跨端数据契约时，优先检查这里。
+- `desktop/`：Electron 桌面端壳层，复用 `client`、`server` 和 `shared`，负责窗口、桌面运行时、构建和发布。
+- `site/`：项目公开介绍站，不承载主创作工作台的业务逻辑。
+
+#### 请求与业务链路
+
+```text
+前端页面
+  -> client/src/api
+  -> Vite /api 代理
+  -> server/src/routes
+  -> modules 或 services
+  -> Prisma / SQLite / LLM / 外部服务
+```
+
+通常可以按下面的入口定位代码：
+
+- 修改页面：从 `client/src/pages/` 或 `client/src/components/` 开始
+- 修改 API：从 `server/src/routes/` 开始
+- 修改小说业务：检查 `server/src/modules/` 和 `server/src/services/novel/`
+- 修改 AI Prompt：从 `server/src/prompting/` 开始
+- 修改数据库：检查 `server/src/prisma/` 和 `server/src/db/`
+- 修改共享契约：检查 `shared/`
+- 修改启动或构建：检查根目录 `package.json` 和 `scripts/`
+
+#### 本地运行产物
+
+下面这些目录用于本地开发或工具生成，不属于主要业务源码：
+
+- `.logs/`：本地启动日志
+- `.code-review-graph/`：`code-review-graph` 生成的代码知识图谱数据库
+- `.pnpm-store/`：本地 pnpm 链接或缓存产物
+- `server/dev.db`：本地开发环境 SQLite 数据库
 
 更细的文档分区说明可以看 [docs/README.md](./docs/README.md)。
 
