@@ -32,7 +32,6 @@ const routedPaths = [
   "/settings/model-routes",
   "/settings/director",
   "/settings/knowledge",
-  "/settings/maintenance",
   "/settings",
   "/worlds",
   "/worlds/generator",

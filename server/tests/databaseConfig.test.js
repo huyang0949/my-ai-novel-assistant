@@ -34,11 +34,9 @@ test("normalizeDatabaseUrl preserves already compatible postgres URLs", () => {
 test("getDatabaseUrl defaults to sqlite when DATABASE_URL is unset outside production", () => {
   const originalDatabaseUrl = process.env.DATABASE_URL;
   const originalNodeEnv = process.env.NODE_ENV;
-  const originalRuntime = process.env.AI_NOVEL_RUNTIME;
   const originalMode = process.env.AI_NOVEL_DATABASE_MODE;
   delete process.env.DATABASE_URL;
   delete process.env.NODE_ENV;
-  delete process.env.AI_NOVEL_RUNTIME;
   delete process.env.AI_NOVEL_DATABASE_MODE;
 
   try {
@@ -66,11 +64,6 @@ test("getDatabaseUrl defaults to sqlite when DATABASE_URL is unset outside produ
       delete process.env.NODE_ENV;
     } else {
       process.env.NODE_ENV = originalNodeEnv;
-    }
-    if (originalRuntime === undefined) {
-      delete process.env.AI_NOVEL_RUNTIME;
-    } else {
-      process.env.AI_NOVEL_RUNTIME = originalRuntime;
     }
     if (originalMode === undefined) {
       delete process.env.AI_NOVEL_DATABASE_MODE;
@@ -126,57 +119,10 @@ test("getDatabaseUrl can prefer the sqlite default for legacy local runtime", ()
   }
 });
 
-test("resolveDatabaseRuntimeConfig selects sqlite schema for desktop legacy mode", () => {
-  const originalDatabaseUrl = process.env.DATABASE_URL;
-  const originalNodeEnv = process.env.NODE_ENV;
-  const originalRuntime = process.env.AI_NOVEL_RUNTIME;
-  const originalMode = process.env.AI_NOVEL_DATABASE_MODE;
-  delete process.env.DATABASE_URL;
-  delete process.env.NODE_ENV;
-  process.env.AI_NOVEL_RUNTIME = "desktop";
-  delete process.env.AI_NOVEL_DATABASE_MODE;
-
-  try {
-    const {
-      DEFAULT_SQLITE_DATABASE_URL,
-      resolveDatabaseRuntimeConfig,
-    } = loadDatabaseConfig();
-    const config = resolveDatabaseRuntimeConfig();
-
-    assert.equal(config.provider, "sqlite");
-    assert.equal(config.url, DEFAULT_SQLITE_DATABASE_URL);
-    assert.equal(config.prismaSchemaPath, "src/prisma/schema.sqlite.prisma");
-    assert.equal(config.prismaMigrationsPath, "src/prisma/migrations.sqlite");
-  } finally {
-    if (originalDatabaseUrl === undefined) {
-      delete process.env.DATABASE_URL;
-    } else {
-      process.env.DATABASE_URL = originalDatabaseUrl;
-    }
-    if (originalNodeEnv === undefined) {
-      delete process.env.NODE_ENV;
-    } else {
-      process.env.NODE_ENV = originalNodeEnv;
-    }
-    if (originalRuntime === undefined) {
-      delete process.env.AI_NOVEL_RUNTIME;
-    } else {
-      process.env.AI_NOVEL_RUNTIME = originalRuntime;
-    }
-    if (originalMode === undefined) {
-      delete process.env.AI_NOVEL_DATABASE_MODE;
-    } else {
-      process.env.AI_NOVEL_DATABASE_MODE = originalMode;
-    }
-  }
-});
-
 test("resolveDatabaseRuntimeConfig keeps postgres schema when a postgres URL is configured", () => {
   const originalDatabaseUrl = process.env.DATABASE_URL;
-  const originalRuntime = process.env.AI_NOVEL_RUNTIME;
   const originalMode = process.env.AI_NOVEL_DATABASE_MODE;
   process.env.DATABASE_URL = "postgresql://writer:pass@db.internal:5432/ai_novel";
-  process.env.AI_NOVEL_RUNTIME = "desktop";
   delete process.env.AI_NOVEL_DATABASE_MODE;
 
   try {
@@ -192,11 +138,6 @@ test("resolveDatabaseRuntimeConfig keeps postgres schema when a postgres URL is 
       delete process.env.DATABASE_URL;
     } else {
       process.env.DATABASE_URL = originalDatabaseUrl;
-    }
-    if (originalRuntime === undefined) {
-      delete process.env.AI_NOVEL_RUNTIME;
-    } else {
-      process.env.AI_NOVEL_RUNTIME = originalRuntime;
     }
     if (originalMode === undefined) {
       delete process.env.AI_NOVEL_DATABASE_MODE;

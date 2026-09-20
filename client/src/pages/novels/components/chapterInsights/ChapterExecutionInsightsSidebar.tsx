@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobileViewport } from "@/components/layout/mobile/useIsMobileViewport";
 
-function DesktopSidebar(props: ChapterExecutionInsightsSidebarProps) {
+function WideScreenSidebar(props: ChapterExecutionInsightsSidebarProps) {
   const [activeTab, setActiveTab] = useState<"overview" | "timeline" | "character" | "resources">("overview");
 
   useEffect(() => {
@@ -154,5 +154,5 @@ export default function ChapterExecutionInsightsSidebar(props: ChapterExecutionI
     return <MobileSidebar {...props} />;
   }
 
-  return <DesktopSidebar {...props} />;
+  return <WideScreenSidebar {...props} />;
 }

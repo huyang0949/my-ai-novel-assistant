@@ -2,12 +2,10 @@ import { useLocation } from "react-router-dom";
 import { SlidersHorizontal } from "lucide-react";
 import LLMSelector from "@/components/common/LLMSelector";
 import { useCreationSetup } from "@/components/onboarding/CreationSetupContext";
-import AppVersionBadge from "@/components/layout/AppVersionBadge";
-import DesktopBrandMark from "@/components/layout/DesktopBrandMark";
+import BrandMark from "@/components/layout/BrandMark";
 import LiveExecutionDialog from "@/components/liveExecution/LiveExecutionDialog";
 import ProjectGithubLink from "@/components/layout/ProjectGithubLink";
 import ThemeToggle from "@/components/theme/ThemeToggle";
-import DesktopReleaseNotesDialog from "@/components/layout/DesktopReleaseNotesDialog";
 import { Button } from "@/components/ui/button";
 import {
   AUTO_DIRECTOR_MOBILE_CLASSES,
@@ -30,12 +28,10 @@ export default function Navbar(props: NavbarProps) {
   return (
     <header className="flex h-16 min-w-0 items-center justify-between gap-3 border-b bg-background px-4 sm:px-6">
       <div className="flex min-w-0 items-center gap-2">
-        <DesktopBrandMark className="h-8 w-8 shrink-0 drop-shadow-none" />
+        <BrandMark className="h-8 w-8 shrink-0 drop-shadow-none" />
         <div className="flex min-w-0 flex-col leading-tight">
           <div className="flex min-w-0 items-center gap-1.5">
             <span className="min-w-0 truncate text-sm font-semibold">AI 小说创作工作台</span>
-            <AppVersionBadge />
-            <DesktopReleaseNotesDialog />
             <ProjectGithubLink />
           </div>
           <span className="hidden truncate text-[11px] text-muted-foreground sm:block">AI Novel Production Engine</span>

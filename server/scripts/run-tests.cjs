@@ -16,7 +16,6 @@ const integrationTests = new Set([
   "prompting.test.js",
   "promptWorkbench.test.js",
   "ragCompatibilityBootstrap.test.js",
-  "runtimeMigrations.test.js",
 ]);
 
 function listTestFiles(directory) {

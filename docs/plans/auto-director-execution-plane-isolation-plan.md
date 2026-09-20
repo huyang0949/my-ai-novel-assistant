@@ -354,7 +354,7 @@ Web API 控制面
 - 新增独立 `Director Worker` 入口，由 Worker 领取命令、续租、执行、落成功/失败/stale 状态。
 - 前端运行态刷新拆成轻量 projection 轮询和产物边界刷新，移除自动导演运行中每 2 秒强刷 `volumes` 的行为。
 - 活动自动导演任务详情中的 `pendingManualRecovery` 优先级必须高于 `queued/running` 展示；待恢复任务不得在顶部接管条、任务面板、步骤列表中显示为“运行中”。
-- 新增边界回归测试，禁止自动导演控制面 route 重新直接调用 `continueTask`，并验证 dev/desktop dev 会启动独立 Worker。
+- 新增边界回归测试，禁止自动导演控制面 route 重新直接调用 `continueTask`，并验证开发模式会启动独立 Worker。
 
 本轮二次排查确认：只把 `continue` 改为 Worker 命令并不足以完成执行面隔离。点击继续后仍出现成批 pending XHR 的根因是三层压力叠加：
 
@@ -364,7 +364,7 @@ Web API 控制面
 
 追加收口要求：
 
-- SQLite 启动时必须配置 `WAL + synchronous=NORMAL + busy_timeout`，除非显式设置 `SQLITE_ENABLE_WAL=false` 进行诊断；桌面版和开发态都不得默认回退到 `DELETE` journal。
+- SQLite 启动时必须配置 `WAL + synchronous=NORMAL + busy_timeout`，除非显式设置 `SQLITE_ENABLE_WAL=false` 进行诊断；Web 服务端和开发态都不得默认回退到 `DELETE` journal。
 - 运行态持久化必须按 delta 写入，只处理变化的 step/event/artifact/dependency；不得在每次 mutation 中全量删除重建运行态，也不得继续把完整 runtime 塞回任务 seed payload。
 - 自动导演运行中，前端只能轮询轻量 projection；完整业务资产只能在用户进入对应工作区、事件版本变化后的非运行态、任务完成或等待确认时按当前可见 tab 刷新。
 - `waiting_approval` 是硬 gate/人工确认态，不属于需要持续轮询的 running 态；到达 gate 后应停止运行态轮询，等待用户明确继续。

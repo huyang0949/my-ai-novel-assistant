@@ -7,7 +7,7 @@ type TaskAvailableListener = (hint?: { commandType?: string; taskId?: string }) 
  * 避免纯数据库轮询的 1.5 秒延迟。
  *
  * 架构要点：
- * - 同进程场景（桌面版、单体部署）直接通过 EventEmitter 实现零延迟通知。
+ * - 同进程场景（单体部署）直接通过 EventEmitter 实现零延迟通知。
  * - 跨进程场景（server + director-worker 分进程）使用轮询兜底，
  *   未来可扩展为 IPC / Unix socket / Redis pub-sub。
  * - 不替代数据库持久化：所有状态仍以 DB 为准，Dispatcher 仅做唤醒信号。

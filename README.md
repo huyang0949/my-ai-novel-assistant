@@ -26,19 +26,16 @@
 - 👉 用一句灵感启动整本书的规划，AI 自动给出方向 / 世界 / 角色 / 卷战略 / 章节任务
 - 👉 把章节生成、审核、修复、状态回灌串成可暂停可恢复的生产链
 - 👉 把拆书、知识库、写法引擎、角色资源账本、世界手册都做成可召回的长期资产
-- 👉 提供漫画、短剧等衍生工坊围绕已完成的小说内容做视觉与剧本延展
 - 👉 配套公开介绍站、生产链深度文档和按阶段的恢复手册
 
 适合**完全不懂写作的新手**走完一本长篇，也适合研究 AI Native 应用、Agent Workflow、LangGraph 编排和长链路任务的开发者参考。
 
-## Windows 桌面版
+## Web 端使用
 
-如果你只是想直接下载安装并开始使用，优先从桌面版入口进入：
+项目当前面向浏览器运行。启动前后端开发服务后，访问 `http://localhost:5173` 即可进入小说创作工作台；公开介绍站提供功能预览、模块文档和使用指南。
 
-- 下载入口：[GitHub Releases](https://github.com/ExplosiveCoderflome/AI-Novel-Writing-Assistant/releases)
-- 最新版本页：[Latest Release](https://github.com/ExplosiveCoderflome/AI-Novel-Writing-Assistant/releases/latest)
-- 建议优先下载 `Setup.exe` 安装版；如果你不想安装，或者想放在 U 盘 / 临时目录里直接运行，再选择 `portable` 版本
-- 公开介绍站：[GitHub Pages 介绍站](https://explosivecoderflome.github.io/AI-Novel-Writing-Assistant/) 提供功能预览、模块文档和使用指南
+- 本地开发：运行 `pnpm dev`
+- 公开介绍站：[GitHub Pages 介绍站](https://explosivecoderflome.github.io/AI-Novel-Writing-Assistant/)
 
 ## 用 Codex 持续创作长篇：Ani Book Skill
 
@@ -108,25 +105,19 @@
 - 拆书结果和知识库文档通过 RAG 回灌到规划、续写和正文生成
 - RAG 索引流式并行：Embedding 与 Qdrant 写入并发可调；拆书产物入 facets 索引让召回包含拆书结论；chunk hash 去重防止重建产生重复向量；retrieval trace 后端可追踪召回为什么命中
 
-### 7. 漫画与短剧衍生工坊
-
-- **漫画工作台**：场景一致性、角色视觉资产、视觉锚点控制；分镜与角色面板支持图像生成确认弹窗，避免误触消耗额度
-- **短剧改编生产管线 v3**：从小说内容衍生短剧剧本和镜头
-- 衍生工坊不在主链跑通前打开——它们消费的是小说已生成的章节、角色和场景
-
-### 8. 公开介绍站与文档体系
+### 7. 公开介绍站与文档体系
 
 - GitHub Pages **公开介绍站**（端口 4173）展示主链、产品截图、文档入口与下载链接
 - 文档站提供本地全文搜索、面包屑、文内目录、上 / 下一篇导航、tip / warn / checkpoint 提示块、GFM 表格
 - 34 篇公开文档：项目介绍、安装与准备、常见问题、故障排查、第一本小说实操路径、热门题材雷达、按阶段恢复手册、端到端生产链、自动导演阶段全景、章节执行链、知识与 RAG 召回链 + 模块说明
 - 模块文档配套真实产品截图；自动导演阶段名用中文表达，技术别名对照表保留在自动导演阶段全景文末供开发者查阅
 
-### 9. 模型路由与本地运行
+### 8. 模型路由与本地运行
 
 - 支持 OpenAI、DeepSeek、SiliconFlow、xAI 等多提供商；规划、正文、审阅、拆书等链路可按任务拆开路由
 - 默认 SQLite 即可跑通主链；需要 RAG 检索时再接入 Qdrant
 - RAG 并发数、限速等运行时参数从 .env 迁到设置面板，改完即生效无需重启
-- Monorepo 拆分（pnpm workspace），桌面版 / 介绍站 / 服务端 / 客户端独立可构建
+- Monorepo 拆分（pnpm workspace），介绍站 / 服务端 / 客户端独立可构建
 
 
 ## 典型使用路径
@@ -155,7 +146,7 @@
 - 创作入口聚焦小说、拆书、知识库、世界设定和自动导演，漫画与短剧工作台不再出现在导航、路由和创建流程中。
 - 视觉资源库与角色对话入口同步收敛到小说相关内容，减少新手面对的无关选项。
 - 保留已有项目的数据兼容能力，不影响小说项目和已有小说资产的继续使用。
-- Windows 桌面版更新至 0.4.19，包含章节执行保护、模型路由管理以及 AI 实况耗时与 Token 统计。
+- 项目运行形态收敛为 Web 端，安装、启动和维护路径更简单。
 
 完整历史更新见 [docs/releases/release-notes.md](./docs/releases/release-notes.md)。
 
@@ -330,17 +321,7 @@
 pnpm install
 ```
 
-默认的 `pnpm install` 现在只准备 Web / Server 开发所需依赖，不会在首次安装时强制下载 Electron 桌面运行时。
-
-- 如果你只是运行现有 Web / Server 开发流，到这里就够了
-- 如果你要启动桌面端开发壳，首次运行 `pnpm dev:desktop` 时会自动补拉 Electron 运行时
-- 如果你想提前完成这一步，也可以手动执行：
-
-```bash
-pnpm run prepare:desktop-runtime
-```
-
-桌面端运行时首次下载需要可访问 Electron 分发源的网络环境；如果你所在网络无法访问 GitHub Releases，建议先配置代理或镜像后再执行桌面端命令。
+安装依赖后即可启动 Web / Server 开发流。
 
 如果你在 Windows 上执行 `pnpm install` 时卡在 `prisma preinstall`，通常先检查这两类问题：
 
@@ -570,10 +551,8 @@ pnpm --filter @ai-novel/server test:book-analysis
 ### Monorepo 结构
 
 ```text
-client/       React + Vite 前端
 server/       Express + Prisma + Agent Runtime + Creative Hub
 shared/       前后端共享类型、协议与工具
-desktop/      Electron 桌面端壳层
 site/         公开介绍站与文档展示站
 scripts/      启动、构建、检查和发布辅助脚本
 docs/         架构、设计、工作流、Wiki、计划与发布说明
@@ -611,10 +590,9 @@ images/       README、产品预览和文档截图
 - `server/src/workers/`：后台任务和自动导演 worker
 - `server/src/middleware/`：认证、错误处理等 Express 中间件
 
-#### 共享包与桌面端
+#### 共享包与介绍站
 
 - `shared/`：前后端共同使用的 API 类型、领域类型、图片 Prompt 类型和工具函数。修改跨端数据契约时，优先检查这里。
-- `desktop/`：Electron 桌面端壳层，复用 `client`、`server` 和 `shared`，负责窗口、桌面运行时、构建和发布。
 - `site/`：项目公开介绍站，不承载主创作工作台的业务逻辑。
 
 #### 请求与业务链路

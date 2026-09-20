@@ -212,7 +212,7 @@
 
 ## Layout Rules
 
-### Desktop
+### 宽屏
 
 优先使用工作台布局：
 

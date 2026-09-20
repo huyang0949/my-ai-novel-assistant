@@ -73,7 +73,7 @@ export default function StoryConstellationDialog({
   const [activeHint, setActiveHint] = useState("");
   const [foundationPage, setFoundationPage] = useState(0);
   const [layoutSize, setLayoutSize] = useState({ width: 0, height: 0 });
-  const desktopFieldRef = useRef<HTMLDivElement | null>(null);
+  const wideFieldRef = useRef<HTMLDivElement | null>(null);
   const orderedOptions = useMemo(() => orderIdeaConstellationOptions(options), [options]);
   const plotOptions = orderedOptions;
   const visibleGenreOptions = useMemo(
@@ -131,8 +131,8 @@ export default function StoryConstellationDialog({
   ]);
 
   useEffect(() => {
-    if (!open || !desktopFieldRef.current) return;
-    const field = desktopFieldRef.current;
+    if (!open || !wideFieldRef.current) return;
+    const field = wideFieldRef.current;
     const updateSize = () => {
       const bounds = field.getBoundingClientRect();
       setLayoutSize((current) => (
@@ -250,7 +250,7 @@ export default function StoryConstellationDialog({
           </div>
         ) : (
           <>
-            <div ref={desktopFieldRef} className="relative hidden h-full min-h-[560px] overflow-hidden lg:block">
+            <div ref={wideFieldRef} className="relative hidden h-full min-h-[560px] overflow-hidden lg:block">
               <div className="absolute left-[8%] top-[16%] h-64 w-64 rounded-full bg-sky-400/5 blur-[90px]" />
               <div className="absolute right-[8%] top-[20%] h-72 w-72 rounded-full bg-violet-400/5 blur-[100px]" />
               <div className="absolute bottom-[2%] left-[34%] h-64 w-96 rounded-full bg-emerald-400/5 blur-[110px]" />

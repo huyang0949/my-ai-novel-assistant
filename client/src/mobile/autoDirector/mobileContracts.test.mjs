@@ -241,7 +241,7 @@ test("auto-approval preference controls wrap labels and save actions on mobile t
   assertContains(
     preferenceCard,
     "AUTO_DIRECTOR_MOBILE_CLASSES.settingsActionRow",
-    "settings save action should be full-width on phones and compact on desktop",
+    "settings save action should be full-width on phones and compact on wide screens",
   );
   assertImportsMobileContracts(channelSettingsCard, "channel settings card should import mobile settings action contracts");
   assertContains(

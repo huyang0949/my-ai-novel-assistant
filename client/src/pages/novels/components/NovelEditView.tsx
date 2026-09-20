@@ -47,10 +47,10 @@ export default function NovelEditView(props: NovelEditViewProps) {
     return <MobileNovelEditView {...props} />;
   }
 
-  return <DesktopNovelEditView {...props} />;
+  return <WideScreenNovelEditView {...props} />;
 }
 
-function DesktopNovelEditView(props: NovelEditViewProps) {
+function WideScreenNovelEditView(props: NovelEditViewProps) {
   const {
     id,
     activeTab,
