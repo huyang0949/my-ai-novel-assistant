@@ -1,7 +1,6 @@
 packages:
   - client
   - server
-  - site
   - shared
 injectWorkspacePackages: true
 allowBuilds:

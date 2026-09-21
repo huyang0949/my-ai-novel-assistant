@@ -116,7 +116,6 @@ description: Diagnose and repair AI-Novel-Writing-Assistant repository problems 
 
 先选择能覆盖真实根因的最窄检查，并确认没有近期等价结果可以复用。常见选择包括：
 
-- 文档站：`pnpm check:docs-manifest`、`pnpm --filter @ai-novel/site build`。
 - 前端：`pnpm --filter @ai-novel/client typecheck` 或相关聚焦测试。
 - 服务端：相关 `node --test`、服务级测试或 `pnpm --filter @ai-novel/server build`。
 - 共享契约：先构建 `@ai-novel/shared`，再验证直接消费者。

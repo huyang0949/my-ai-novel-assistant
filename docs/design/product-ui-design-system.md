@@ -4,7 +4,7 @@
 
 本项目的核心体验不是通用后台管理，也不是聊天机器人，而是帮助写作新手完成一整本小说的 AI 创作工作台。界面需要把复杂的自动导演、角色、世界观、章节生产、知识库和任务恢复能力组织成清晰的创作路径。
 
-本规范用于约束后续产品 UI 设计、页面生成和前端组件构建。公开文档站继续遵循 `site/DESIGN.md`；客户端产品界面以本文为准。
+本规范用于约束后续产品 UI 设计、页面生成和前端组件构建。
 
 ## Design North Star
 
@@ -46,7 +46,7 @@
 - 任意单页的最终布局方案。
 - 某个页面必须展示哪些具体卡片。
 - 某个页面的线框图或视觉稿。
-- 临时活动页、营销页或公开文档站设计。
+- 临时活动页或营销页设计。
 
 ## Information Architecture
 
@@ -340,7 +340,6 @@ AI 自动执行必须可视化为用户能理解的流程。
 
 ## Relationship to Other Docs
 
-- `site/DESIGN.md`：公开文档站和 GitHub Pages 介绍站规范。
 - `docs/design/product-ui-design-system.md`：客户端产品 UI 和组件构建规范。
 - `docs/wiki/product/beginner-first-novel-completion.md`：产品目标和新手完成整本小说的长期原则。
 - `docs/plans/assistant-ui-plan.md`：创作中枢和 assistant-ui 迁移计划。

@@ -6,7 +6,7 @@
 
 本方案只优化现有页面的信息层级、视觉合同、状态表达、响应式与文案，不增加新的业务能力、API、数据库字段、路由或工作流分支。
 
-客户端规范以 `docs/design/product-ui-design-system.md` 为准。`site/DESIGN.md` 只约束公开介绍站，不用于客户端页面。
+客户端规范以 `docs/design/product-ui-design-system.md` 为准。
 
 ## 目标
 
