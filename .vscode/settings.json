@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    ".npmrc": true,
+    ".nvmrc": true,
+    "CLA.md": true,
+    "CONTRIBUTING.md": true,
+    "LICENSE": true,
+    "NOTICE": true,
+    "skills-lock.json": true
+  }
+}
